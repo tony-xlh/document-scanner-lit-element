@@ -3,6 +3,7 @@ import Dynamsoft from 'dwt';
 
 export class DocumentScanner extends LitElement {
   static properties = {
+    total: {},
   };
   DWObject;
   static styles = css`
@@ -16,6 +17,7 @@ export class DocumentScanner extends LitElement {
     `;
   constructor() {
     super();
+    this.total = 0;
     Dynamsoft.DWT.AutoLoad = false;
     Dynamsoft.DWT.ResourcesPath = "/dwt/dist";
   }
@@ -26,7 +28,8 @@ export class DocumentScanner extends LitElement {
       <button @click=${this.scan}>Scan</button>
       <button @click=${this.save}>Save</button>
     </div>
-    <div id="dwtcontrolContainer"></div>`;
+    <div id="dwtcontrolContainer"></div>
+    <div>Total: ${this.total}</div>`;
   }
 
   scan(){
@@ -62,6 +65,9 @@ export class DocumentScanner extends LitElement {
         pThis.DWObject.Viewer.show();
         pThis.DWObject.Viewer.width = "100%";
         pThis.DWObject.Viewer.height = "100%";
+        pThis.DWObject.RegisterEvent('OnBufferChanged',function () {
+          pThis.total = pThis.DWObject.HowManyImagesInBuffer;
+        });
         const event = new CustomEvent('initialized', {
           detail: {
             DWObject: pThis.DWObject
