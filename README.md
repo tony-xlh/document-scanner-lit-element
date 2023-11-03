@@ -1,6 +1,10 @@
-# Webpack Frontend Starterkit
+# Document Scanner Lit-Element
 
-A lightweight foundation for your next webpack based frontend project.
+A document scanner demo using lit-element and [Dynamic Web TWAIN](https://www.dynamsoft.com/web-twain/overview).
+
+You may need to [apply for a license](https://www.dynamsoft.com/customer/license/trialLicense?product=dwt) to use Dynamic Web TWAIN.
+
+[Online demo](https://bejewelled-alfajores-51b60d.netlify.app/)
 
 ### Installation
 
