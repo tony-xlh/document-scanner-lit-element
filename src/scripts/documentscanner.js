@@ -3,24 +3,17 @@ import Dynamsoft from 'dwt';
 
 export class DocumentScanner extends LitElement {
   static properties = {
-    initialized: {},
   };
   DWObject;
-  static styles = css`/* playground-fold */
-
+  static styles = css`
     :host {
-      display: inline-block;
-      min-width: 4em;
-      text-align: center;
-      padding: 0.2em;
-      margin: 0.2em 0.1em;
+      display: block;
     }
     #dwtcontrolContainer {
       width: 100%;
       height: 100%;
     }
-    /* playground-fold-end */`;
-
+    `;
   constructor() {
     super();
     Dynamsoft.DWT.AutoLoad = false;
@@ -28,26 +21,10 @@ export class DocumentScanner extends LitElement {
   }
 
   render() {
-    return html`<div id="dwtcontrolContainer"></div><button class="scan-button">Scan</button>`;
-  }
-
-  registerEvent(){
-    let scanButton = this.renderRoot.querySelector(".scan-button");
-    let pThis = this;
-    scanButton.addEventListener("click",function(){
-      pThis.DWObject.SelectSource(function () {
-        pThis.DWObject.OpenSource();
-        pThis.DWObject.AcquireImage();
-      },
-        function () {
-          console.log("SelectSource failed!");
-        }
-      );
-    });
+    return html`<div id="dwtcontrolContainer"></div>`;
   }
 
   firstUpdated() {
-    this.registerEvent();
     let pThis = this;
     let dwtContainer = this.renderRoot.getElementById("dwtcontrolContainer");
     Dynamsoft.DWT.Containers = [{ ContainerId: 'dwtcontrolContainer',Width: 270, Height: 350 }];
@@ -62,8 +39,12 @@ export class DocumentScanner extends LitElement {
           pThis.DWObject.Viewer.show();
           pThis.DWObject.Viewer.width = "100%";
           pThis.DWObject.Viewer.height = "100%";
-          console.log(dwtContainer);
-          window.DWObject = pThis.DWObject;
+          const event = new CustomEvent('initialized', {
+            detail: {
+              DWObject: pThis.DWObject
+            }
+          });
+          pThis.dispatchEvent(event);
         },
         function(err) {
           console.log(err);
