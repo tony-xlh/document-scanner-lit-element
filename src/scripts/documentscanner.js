@@ -54,7 +54,7 @@ export class DocumentScanner extends LitElement {
   
   save(){
     if (this.DWObject) {
-      this.DWObject.SaveAllAsPDF("Scannd.pdf");
+      this.DWObject.SaveAllAsPDF("Scanned.pdf");
     }
   }
 
