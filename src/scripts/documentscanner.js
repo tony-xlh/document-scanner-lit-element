@@ -10,9 +10,15 @@ export class DocumentScanner extends LitElement {
     :host {
       display: block;
     }
+    .buttons {
+      height: 25px;
+    }
     #dwtcontrolContainer {
       width: 100%;
-      height: 100%;
+      height: calc(100% - 50px);
+    }
+    .status {
+      height: 25px;
     }
     `;
   constructor() {
@@ -24,12 +30,12 @@ export class DocumentScanner extends LitElement {
 
   render() {
     return html`
-    <div>
+    <div class="buttons">
       <button @click=${this.scan}>Scan</button>
       <button @click=${this.save}>Save</button>
     </div>
     <div id="dwtcontrolContainer"></div>
-    <div>Total: ${this.total}</div>`;
+    <div class="status">Total: ${this.total}</div>`;
   }
 
   scan(){
